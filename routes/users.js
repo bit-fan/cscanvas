@@ -77,7 +77,7 @@ function processCommand(drawingObj, cmd, callback) {
     const str = getCanvasStr(drawingObj.getMatrix());
     callback('data', str);
   } else {
-    console.log(msg || 'Invalid command');
+    // console.log(msg || 'Invalid command');
     callback('err', result.message);
   }
   // callback('next');
