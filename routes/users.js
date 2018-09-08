@@ -45,7 +45,7 @@ function processCommand(drawingObj, cmd, callback) {
     return check || item;
   })
 
-  let result = drawingObj.createResObj(false);
+  // let result = drawingObj.createResObj(false);
   if (cmdType == 'C') {
     // draw canvas
     if (cmdData.length == 2) {

@@ -5,6 +5,7 @@ $(document).ready(() => {
       processCommand($(this).val());
       cmdHist.push($(this).val());
       updateCmdHis();
+      $(this).val('');
     }
   });
 
@@ -21,7 +22,7 @@ $(document).ready(() => {
       if (result.ok === true) {
         showCanvas(result.data);
       } else {
-        updateRemark('err', cmd, result.data);
+        updateRemark('err', cmd, result.err);
         return;
       }
     });
