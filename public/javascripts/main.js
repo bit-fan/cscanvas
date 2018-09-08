@@ -8,10 +8,6 @@ $(document).ready(() => {
     }
   });
 
-  $('#commandHisDiv').on('click',function(){
-    console.log($(this));
-    $('#input').val($(this).text());
-  })
   function updateCmdHis(){
     $('#commandHisDiv').html('');
     cmdHist.forEach(str=>{
