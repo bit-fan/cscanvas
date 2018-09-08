@@ -15,26 +15,28 @@ app.set('view engine', 'jade');
 
 app.use(logger('dev'));
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({
+  extended: false
+}));
 app.use(cookieParser());
 
 //set cookie
 app.use(function (req, res, next) {
   // check if client sent cookie
   var cookie = req.cookies.userId;
-  if (cookie === undefined)
-  {
+  if (cookie === undefined) {
     // no: set a new cookie
-    var randomNumber=Math.random().toString();
-    randomNumber=randomNumber.substring(2,randomNumber.length);
-    res.cookie('userId',randomNumber, { maxAge: 900000, httpOnly: true });
+    var randomNumber = Math.random().toString();
+    cookie = randomNumber.substring(2, randomNumber.length);
     console.log('cookie created successfully');
-  } 
-  else
-  {
+  } else {
     // yes, cookie was already present 
     console.log('cookie exists', cookie);
-  } 
+  }
+  res.cookie('userId', cookie, {
+    maxAge: 24 * 3600 * 1000,
+    httpOnly: true
+  });
   next(); // <-- important!
 });
 
@@ -45,12 +47,12 @@ app.use('/', indexRouter);
 app.use('/drawCommand', usersRouter);
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   next(createError(404));
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};

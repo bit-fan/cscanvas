@@ -24,7 +24,7 @@ router.post('/', function (req, res, next) {
         ok: true,
         data: []
       });
-    }else if (type === 'err') {
+    } else if (type === 'err') {
       res.send({
         ok: false,
         err: data
