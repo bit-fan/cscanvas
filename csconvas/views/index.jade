@@ -1,0 +1,17 @@
+extends layout
+
+block content
+  #main
+    .row
+      .col-8
+        label enter command:
+        span 
+          input#input
+        br
+        div Result
+        #remark(style='color:red')
+        textarea#resultArea(readonly='')
+      .col-4
+        div Command history
+        ul
+          #commandHisDiv
