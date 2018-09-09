@@ -19,28 +19,6 @@ app.use(express.urlencoded({
   extended: false
 }));
 app.use(cookieParser());
-
-//set cookie
-app.use(function (req, res, next) {
-  // check if client sent cookie
-  var cookie = req.cookies.userId;
-  if (cookie === undefined) {
-    // no: set a new cookie
-    var randomNumber = Math.random().toString();
-    cookie = randomNumber.substring(2, randomNumber.length);
-    console.log('cookie created successfully');
-  } else {
-    // yes, cookie was already present 
-    console.log('cookie exists', cookie);
-  }
-  res.cookie('userId', cookie, {
-    maxAge: 24 * 3600 * 1000,
-    httpOnly: true
-  });
-  next(); // <-- important!
-});
-
-
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);

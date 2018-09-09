@@ -6,13 +6,27 @@ const lib = require('../server/lib/drawing');
 
 let allObj = {};
 router.post('/', function (req, res, next) {
-  var cookie = req.cookies.userId;
+
+  let cookie = req.cookies.canvasId;
+  if (cookie === undefined) {
+    // no: set a new cookie
+    var randomNumber = Math.random().toString();
+    cookie = randomNumber.substring(2, randomNumber.length);
+  } else {
+    // console.log('cookie exists', cookie);
+  }
+  res.cookie('canvasId', cookie, {
+    maxAge: 24 * 3600 * 1000,
+    httpOnly: true
+  });
+
   // console.log('req', req, cookie);
   if (!allObj[cookie]) {
     allObj[cookie] = new lib.drawing();
   }
 
   processCommand(allObj[cookie], req.body.cmd, (type, data) => {
+    console.log(allObj);
     if (type === 'data') {
       res.send({
         ok: true,
@@ -45,7 +59,7 @@ function processCommand(drawingObj, cmd, callback) {
     return check || item;
   })
 
-  // let result = drawingObj.createResObj(false);
+  let result = drawingObj.createResObj(false);
   if (cmdType == 'C') {
     // draw canvas
     if (cmdData.length == 2) {
@@ -72,6 +86,8 @@ function processCommand(drawingObj, cmd, callback) {
       result = drawingObj.clearRect();
       return callback('quit', result);
     }
+  } else {
+    return callback('err', drawingObj.createResObj(false).message);
   }
   if (result.ok === true) {
     const str = getCanvasStr(drawingObj.getMatrix());

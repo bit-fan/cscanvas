@@ -168,7 +168,7 @@ proto.checkRange = function (x, y) {
 proto.createResObj = function (ok, para) {
   return {
     ok: ok ? true : false,
-    message: errorCode[para] || ''
+    message: errorCode[para] || errorCode[1]
   }
 }
 // };
